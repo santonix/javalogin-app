@@ -11,11 +11,32 @@ pipeline {
 
         stage('build') {
             steps {
-                sh 'mvn clean install'
+                sh 'mvn clean install -DskipTests=true '
             }
 
         }
+
+        stage('TEST') {
+            steps {
+                sh 'mvn test '
+            }
+        }
     }
+
+    
+    post {
+        success {
+            emailext subject: 'Jenkins Build Notification - Success',
+                      body: 'Your Jenkins build was successful.',
+                      to: 'jofranco1203@gmail.com'
+        }
+        failure {
+            emailext subject: 'Jenkins Build Notification - Failure',
+                      body: 'Your Jenkins build failed.',
+                      to: 'jofranco1203@gmail.com'
+        }
+    }
+    
 
 
 }
