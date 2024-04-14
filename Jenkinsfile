@@ -34,8 +34,9 @@ pipeline {
                     docker.withRegistry('https://index.docker.io/v1/', 'dockerhub-credentials') {
                         docker.image('santonix/santonix-javalogin-app').push()
                     }
-                    sh 'docker run -d -p 8888:9090 santonix/santonix-javalogin-app'
+                    sh 'docker run -d -p 8080:9090 santonix/santonix-javalogin-app'
                     sh 'docker ps'
+                    sh 'java -jar /target/dptweb.war'
                 }
             }
         }
