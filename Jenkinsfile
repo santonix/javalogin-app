@@ -21,6 +21,23 @@ pipeline {
                 sh 'mvn test '
             }
         }
+
+        stage('Deploy') {
+            steps {
+                script {
+                    def AbstractTestResultAction testResultAction = currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
+                    if (testResultAction == null) {
+                        error("Could not read test results")
+                    }
+                    def numberOfFailedTests = testResultAction.failCount
+                    testResultAction = null
+                    if (numberOfFailedTests == null || numberOfFailedTests != 0) {
+                        error("Did not deploy. Number of failed tests: " + numberOfFailedTests)
+                    }
+                    sh 'mvn deploy -DskipTests'
+                }
+            }
+        } 
     }
 
     
@@ -30,13 +47,10 @@ pipeline {
                       body: 'Your Jenkins build was successful.',
                       to: 'jofranco1203@gmail.com'
         }
-        failure {
-            emailext subject: 'Jenkins Build Notification - Failure',
-                      body: 'Your Jenkins build failed.',
+         failure {
+            emailext subject: 'Jenkins Build Notification - failure',
+                      body: 'Your Jenkins build was not successful.',
                       to: 'jofranco1203@gmail.com'
         }
     }
-    
-
-
-}
+}   
