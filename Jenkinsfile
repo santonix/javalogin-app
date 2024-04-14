@@ -30,7 +30,7 @@ pipeline {
         stage('Deploy Docker Image') {
             steps {
                 script {
-                    docker.tag('javalogin-app', 'santonix/santonix-javalogin-app')
+                    docker.build('santonix/santonix-javalogin-app')
                     docker.withRegistry('https://index.docker.io/v1/', 'dockerhub-credentials') {
                         docker.image('santonix/santonix-javalogin-app').push()
                     }
