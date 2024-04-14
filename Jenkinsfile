@@ -40,19 +40,16 @@ pipeline {
            steps {
              sh 'docker tag javalogin-app santonix/santonix-javalogin-app'
              script {
-               docker.withRegistry('https://index.docker.io/v1/', 'dockerhub-credentials') {
+                docker.withRegistry('https://index.docker.io/v1/', 'dockerhub-credentials') {
                 docker.image('santonix/santonix-javalogin-app').push()
+                docker run -d -p 8080:9090 santonix/santonix-javalogin-app
+                docker ps
                }
              }
             }
         }
 
-        stage {
-            steps {
-                sh '''docker run -d -p 8080:9090 santonix/santonix-javalogin-app'
-                      docker ps'''
-            }
-        }
+        
 
 
         
