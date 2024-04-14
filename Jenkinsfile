@@ -36,7 +36,7 @@ pipeline {
                     }
                     sh 'docker run -d -p 8080:9090 santonix/santonix-javalogin-app'
                     sh 'docker ps'
-                    sh 'java -jar /target/dptweb.war'
+                    
                 }
             }
         }
