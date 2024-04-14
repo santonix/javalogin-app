@@ -22,13 +22,14 @@ pipeline {
             }
         }
 
-        stage('Deploy') {
+        stage('Publish') {
+            
             steps {
-                
-                    sh 'mvn deploy -DskipTests'
-                }
+               sh 'java -jar ./target/dptweb-1.0.war'
             }
-         
+        }
+
+        
     }
 
     
