@@ -49,8 +49,8 @@ pipeline {
 
         stage {
             steps {
-                sh 'docker run -d -p 8080:9090 santonix/santonix-javalogin-app'
-                sh 'docker ps'
+                sh '''docker run -d -p 8080:9090 santonix/santonix-javalogin-app'
+                      docker ps'''
             }
         }
 
