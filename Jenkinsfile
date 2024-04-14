@@ -8,13 +8,14 @@ pipeline {
      
         
         }
-
-        stage('build') {
+         stage('Build') {
             steps {
-                sh 'mvn clean install -DskipTests=true '
+                sh 'mvn clean install -DskipTests'
             }
-
         }
+
+       
+
 
         stage('TEST') {
             steps {
@@ -22,11 +23,17 @@ pipeline {
             }
         }
 
-        stage('Publish') {
-            
+       
+        
+
+         stage('Build Docker Image') {
             steps {
-               sh 'java -jar ./target/dptweb-1.0.war'
+                script {
+                   docker.build('javalogin-app')
+                }
+        
             }
+    
         }
 
         
