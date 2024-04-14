@@ -26,7 +26,7 @@ pipeline {
        
         
 
-         stage('Build Docker Image') {
+        stage('Build Docker Image') {
             steps {
                 script {
                    docker.build('javalogin-app')
@@ -35,6 +35,18 @@ pipeline {
             }
     
         }
+
+        stage('Deploy Docker Image') {
+           steps {
+             sh 'docker tag javalogin-app santonix/santonix-javalogin-app'
+             script {
+               docker.withRegistry('https://index.docker.io/v1/', 'dockerhub-credentials') {
+                docker.image('santonix/santonix-javalogin-app').push()
+               }
+             }
+            }
+        }
+
 
         
     }
@@ -52,4 +64,4 @@ pipeline {
                       to: 'jofranco1203@gmail.com'
         }
     }
-}   
+} 
