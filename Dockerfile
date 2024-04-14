@@ -12,7 +12,7 @@ RUN rm -rf /usr/local/tomcat/webapps/*
 WORKDIR /usr/local/tomcat/webapps
 
 # Copy your Spring Boot application WAR file into the Tomcat webapps directory
-COPY target/your-application.war ROOT.war
+COPY target/dptweb.war ROOT.war
 
 # Expose port 9090 (or any other port you prefer)
 EXPOSE 9090
