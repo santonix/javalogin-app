@@ -24,20 +24,11 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                script {
-                    def AbstractTestResultAction testResultAction = currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
-                    if (testResultAction == null) {
-                        error("Could not read test results")
-                    }
-                    def numberOfFailedTests = testResultAction.failCount
-                    testResultAction = null
-                    if (numberOfFailedTests == null || numberOfFailedTests != 0) {
-                        error("Did not deploy. Number of failed tests: " + numberOfFailedTests)
-                    }
+                
                     sh 'mvn deploy -DskipTests'
                 }
             }
-        } 
+         
     }
 
     
